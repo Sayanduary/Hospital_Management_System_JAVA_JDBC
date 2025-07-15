@@ -59,7 +59,7 @@ public class Patient {
                 System.out.printf("| %-13d | %-13s | %-15d | %-17s |\n", id, name, age, gender);
             }
             System.out.println("+---------------+---------------+-----------------+-------------------+");
-        } catch (SQLException e) { 
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -75,7 +75,6 @@ public class Patient {
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            System.out.println("error");
         }
         return false;
     }
