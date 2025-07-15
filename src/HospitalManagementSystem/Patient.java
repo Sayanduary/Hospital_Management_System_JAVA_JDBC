@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Patient {
@@ -16,14 +17,17 @@ public class Patient {
     }
 
     public void addPatient() {
-        System.out.print("Enter Patient Name: ");
-        String name = scanner.next();
-        System.out.print("Enter Patient's Age: ");
-        int age = scanner.nextInt();
-        System.out.println("Enter Patient's Gender: ");
-        String gender = scanner.next();
-
         try {
+            System.out.print("Enter Patient Name: ");
+            scanner.nextLine(); // Clear any leftover input
+            String name = scanner.nextLine(); // Use nextLine() instead of next() to handle names with spaces
+
+            System.out.print("Enter Patient's Age: ");
+            int age = scanner.nextInt();
+
+            System.out.print("Enter Patient's Gender: ");
+            String gender = scanner.next();
+
             String query = "INSERT INTO patients(name,age,gender) VALUES(?,?,?)";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, name);
@@ -36,8 +40,11 @@ public class Patient {
                 System.out.println("Failed to add patient");
             }
 
+        } catch (InputMismatchException e) {
+            System.out.println("Invalid input! Please enter a valid number for age.");
+            scanner.nextLine(); // Clear the invalid input
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Database error: " + e.getMessage());
         }
     }
 
@@ -60,7 +67,7 @@ public class Patient {
             }
             System.out.println("+---------------+---------------+-----------------+-------------------+");
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Database error: " + e.getMessage());
         }
     }
 
@@ -74,7 +81,7 @@ public class Patient {
                 return true;
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Database error: " + e.getMessage());
         }
         return false;
     }

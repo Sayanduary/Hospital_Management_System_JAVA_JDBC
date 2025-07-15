@@ -4,15 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Scanner;
+
 
 public class Doctor {
     private final Connection connection;
-    private final Scanner scanner;
 
-    public Doctor(Connection connection, Scanner scanner) {
+    public Doctor(Connection connection) {
         this.connection = connection;
-        this.scanner = scanner;
     }
 
 
